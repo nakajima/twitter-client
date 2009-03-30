@@ -2,7 +2,10 @@ $LOAD_PATH << File.dirname(__FILE__)
 
 require 'rubygems'
 require 'nakajima'
+require 'fileutils'
 require 'net/http'
+require 'yaml'
+require 'crypt/blowfish'
 require 'cgi'
 
 require 'core_ext/delegation'
@@ -24,13 +27,20 @@ module Twitter
   end
 
   def self.authenticated?
-    @session && @session.connected?
+    @session and @session.connected? or load_session
   end
 
   def self.authenticate(username, password)
     session = Session.new(username, password)
     session.connect!
     @session = session ; true
+  end
+
+  def self.load_session
+    session = Session.new(nil, nil)
+    if session.load
+      @session = session ; true
+    end
   end
 end
 
