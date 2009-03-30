@@ -59,8 +59,8 @@ module Twitter
 
     def yaml_dump
       {
-        :username => crypter.encrypt_string(username),
-        :password => crypter.encrypt_string(password)
+        :username => $NO_CRYPT ? username : crypter.encrypt_string(username),
+        :password => $NO_CRYPT ? password : crypter.encrypt_string(password)
       }.to_yaml
     end
 

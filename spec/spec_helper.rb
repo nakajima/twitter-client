@@ -6,6 +6,11 @@ require File.join(File.dirname(__FILE__), *%w[helpers fake_web])
 
 require File.dirname(__FILE__) + '/../lib/twitter-client'
 
+if $NO_CRYPT
+  puts "You need the crypt gem to run the tests."
+  exit 1
+end
+
 module ObjectGenerationMethods
   def new_connection(session=new_session)
     Twitter::Connection.new(session)

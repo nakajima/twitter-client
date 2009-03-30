@@ -8,8 +8,24 @@ require 'yaml'
 require 'cgi'
 
 # Gems
-require 'nakajima'
-require 'crypt/blowfish'
+begin
+  require 'crypt/blowfish'
+rescue LoadError
+  $NO_CRYPT = true
+  # Fake encrypter if it's not available
+  module Crypt
+    class Blowfish
+      def initialize(*args) end
+      def decrypt_string(str); str end
+      def encrypt_string(str); str end
+    end
+  end
+  puts "  Warning!"
+  puts
+  puts "  The crypt/blowfish gem was not found."
+  puts "  As a result, saved session file will not be encrypted."
+  puts "  Run `gem install crypt` to install encryption libraries."
+end
 
 # Extensions
 require 'core_ext/delegation'
