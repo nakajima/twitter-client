@@ -1,7 +1,5 @@
 module Twitter
   class Connection
-    VERIFY_PATH = '/account/verify_credentials'
-
     include Delegation
 
     attr_reader :session
@@ -13,34 +11,36 @@ module Twitter
     end
 
     def get(path, params={})
-      uri = uri_for(path)
-      Net::HTTP::Get.new()
+      request(:get, path, params)
     end
 
     def post(path, params={})
-      res = Net::HTTP.start(Twitter::API::BASE) do |http|
-        req = Net::HTTP::Post.new(path + '.' + Twitter::API::FORMAT)
-        req.basic_auth username, password
+      request(:post, path, params) do |req|
         req.set_form_data(params)
-        res = http.request(req)
       end
     end
 
     def authenticate!
-      @response ||= respond!
+      @response ||= get('/account/verify_credentials')
     end
 
     private
 
-    def respond!
-      @response ||= Net::HTTP.start(Twitter::API::BASE) do |http|
-        req = Net::HTTP::Get.new(VERIFY_PATH + '.' + Twitter::API::FORMAT)
+    def request(verb, path, params)
+      path = path + '.' + Twitter::API::FORMAT
+      res = Net::HTTP.start(Twitter::API::BASE) do |http|
+        req = Net::HTTP.const_get(verb.to_s.capitalize).new(path)
         req.basic_auth username, password
+        yield req if block_given?
+        res = http.request(req)
+        check_response(res)
+      end
+    end
 
-        case res = http.request(req)
-        when Net::HTTPUnauthorized then raise API::Unauthorized.new
-        else res
-        end
+    def check_response(res)
+      case res
+      when Net::HTTPUnauthorized then raise API::Unauthorized.new
+      else res
       end
     end
   end

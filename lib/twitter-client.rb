@@ -30,7 +30,7 @@ module Twitter
   def self.authenticate(username, password)
     session = Session.new(username, password)
     session.connect!
-    @session = session
+    @session = session ; true
   end
 end
 

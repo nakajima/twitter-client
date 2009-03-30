@@ -7,7 +7,7 @@ module Twitter
     end
 
     def tweet!(msg)
-      connection.post('/statuses/update', :status => msg)
+      connection.post('/statuses/update', :status => msg) ; msg
     end
 
     def connect!
