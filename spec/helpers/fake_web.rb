@@ -1,3 +1,4 @@
+# FakeWeb kind of sucks dude.
 module FakeWeb
   def self.requests(setter=nil)
     if setter

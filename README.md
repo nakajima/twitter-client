@@ -1,5 +1,9 @@
 # twitter-client
 
+Another one. The goal is to support every damn API under the sun so I don't have to learn somebody else's. Pointless? You bet.
+
+See [this gist](https://gist.github.com/b7ec1e2362a367bc139c) for where I'm going with this.
+
 (c) Copyright 2009 Pat Nakajima
 
 Permission is hereby granted, free of charge, to any person
