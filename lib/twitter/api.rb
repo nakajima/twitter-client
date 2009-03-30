@@ -3,7 +3,7 @@ module Twitter
   module API
     # Everything goes to Twitter for now
     BASE = 'twitter.com'
-    
+
     # Everything goes through JSON for now
     FORMAT = 'json'
 

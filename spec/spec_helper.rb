@@ -12,6 +12,12 @@ if $NO_CRYPT
 end
 
 module ObjectGenerationMethods
+  def new_store(config)
+    store = Twitter::Store.new(config)
+    store.filename = '._twitter_test_'
+    store
+  end
+
   def new_connection(session=new_session)
     Twitter::Connection.new(session)
   end
@@ -20,9 +26,7 @@ module ObjectGenerationMethods
     opts = args.last.is_a?(Hash) ? args.pop : {}
     username = opts[:username] || args[0] || 'admin'
     password = opts[:password] || args[1] || 'password'
-    session = Twitter::Session.new(username, password)
-    session.filename = '._twitter_test_'
-    session
+    Twitter::Session.new(username, password)
   end
 end
 
