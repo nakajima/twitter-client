@@ -10,22 +10,26 @@ module Twitter
       @session = session
     end
 
+    # Make GET request with HTTP auth
     def get(path, params={})
       request(:get, path, params)
     end
 
+    # Make post request with HTTP auth
     def post(path, params={})
       request(:post, path, params) do |req|
         req.set_form_data(params)
       end
     end
 
+    # Ensure authentication credentials are valid
     def authenticate!
       @response ||= get('/account/verify_credentials')
     end
 
     private
 
+    # Wrap common request logic for POST/GET requests
     def request(verb, path, params)
       path = path + '.' + Twitter::API::FORMAT
       res = Net::HTTP.start(Twitter::API::BASE) do |http|
@@ -37,6 +41,7 @@ module Twitter
       end
     end
 
+    # Ensure response is valid
     def check_response(res)
       case res
       when Net::HTTPUnauthorized then raise API::Unauthorized.new
