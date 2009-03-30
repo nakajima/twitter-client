@@ -7,7 +7,7 @@ module Twitter
 
     def initialize(username, password, opts={})
       @username, @password = username, password
-      @connection = opts[:connected]
+      @connection = opts[:connected] ? Connection.new(self) : nil
     end
 
     # Post a via the current session.
