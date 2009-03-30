@@ -46,10 +46,7 @@ module Twitter
         res
       end
 
-
-      {
-        :sessions => session_data
-      }.to_yaml
+      { :sessions => session_data }.to_yaml
     end
   end
 end
