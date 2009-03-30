@@ -3,7 +3,7 @@ module Twitter
     def self.included(base)
       base.extend ClassMethods
     end
-    
+
     module ClassMethods
       def delegate(*args)
         opts = args.last.is_a?(Hash) ? args.pop : {}
