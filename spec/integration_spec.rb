@@ -6,6 +6,15 @@ describe "Twitter Client at a high level" do
     FileUtils.rm("~/._twitter_test_") rescue nil
   end
 
+  it "does not delegate private methods" do
+    expect_authorized do
+      Twitter.authenticate 'foozle', 'bizzle'
+      proc {
+        Twitter.password
+      }.should raise_error(NoMethodError)
+    end
+  end
+
   describe "being authenticated" do
     # As a developer
     # in order interact with Twitter's API

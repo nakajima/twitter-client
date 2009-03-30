@@ -71,8 +71,8 @@ describe Twitter::Session do
       it "loads state from file" do
         session = new_session
         session.load
-        session.username.should == 'foo'
-        session.password.should == 'bar'
+        session.send(:username).should == 'foo'
+        session.send(:password).should == 'bar'
       end
     end
   end

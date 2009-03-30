@@ -2,7 +2,7 @@ module Twitter
   # Most of the logic in twitter-client lives in here. Responsible
   # for maintaining/persisting credentials.
   class Session
-    attr_reader :username, :password
+    attr_reader :username
     attr_writer :filename
 
     def initialize(username, password)
@@ -51,6 +51,7 @@ module Twitter
     end
 
     private
+    attr_reader :password
 
     def crypter
       @crypter ||= Crypt::Blowfish.new('twitter-crypt-key')

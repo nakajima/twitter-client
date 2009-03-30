@@ -39,7 +39,7 @@ module Twitter
 
     # Check to see if Twitter is delegating this method to session
     def delegating?(sym)
-      @session.class.public_instance_methods.include?(sym.to_s)
+      Session.public_instance_methods.include?(sym.to_s)
     end
   end
 
